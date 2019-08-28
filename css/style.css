@@ -1,0 +1,35 @@
+/* grid layout */
+#grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 360px;
+  height: 280px;
+}
+.cell {
+  height: 38px;
+  width: 38px;
+  border: 1px solid black;
+}
+
+/* candies */
+.green {
+  background-image: url('../assets/green.png');
+  background-size:contain;
+  background-position: center;
+}
+.purple {
+  background-image: url('../assets/purple.png');
+  background-size:contain;
+  background-position: center;
+}
+.orange {
+  background-image: url('../assets/orange.png');
+  background-size:contain;
+  background-position: center;
+}
+.blue {
+  background-image: url('../assets/blue.png');
+  background-size:contain;
+  background-position: center;
+}
+
