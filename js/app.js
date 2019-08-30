@@ -10,12 +10,12 @@ function init() {
   // other variables
   const colors = ['green', 'purple', 'orange', 'blue']
   let inPlay = []
+  let emptyCells = []
   let proximity = false
   let colorCheck = false
 
   // function that checks that you are trying to move a candy only by one cell either vertically or horizontally
   function checkProximity() {
-    console.log('hereone')
     const firstCell = parseInt(inPlay[0].getAttribute('id'))
     const secondCell = parseInt(inPlay[1].getAttribute('id'))
     if (firstCell === secondCell + 1 || firstCell === secondCell - 1 || firstCell === secondCell - width || firstCell === secondCell + width) {
@@ -25,8 +25,8 @@ function init() {
     }
   }
 
+  // checks if you can make a move (can only move when you will crush a row/column)
   function checkColor() {
-    console.log('here')
     const color = inPlay[0].classList[1]
     const index = parseInt(inPlay[1].getAttribute('id'))
     
@@ -86,7 +86,42 @@ function init() {
     }
   }
 
+  // function that generates random candies on the first row when candy is crushed
+  function generateCandy() {
+    for (let i = 0; i < width; i++) {
+      const cell = document.getElementById(`${i}`)
+      if (!cell.classList[1]) {
+        cell.classList.add(`${colors[Math.floor(Math.random() * Math.floor(4))]}`)
+      }
+    }
+  }
 
+  // function that checks how many empty cells there are 
+  function emptyCheck() {
+    emptyCells = []
+    const cells = document.querySelectorAll('.cell')
+    for (let i = 0; i < cells.length; i++) {
+      const cell = cells[i]
+      if (!cell.classList[1]) {
+        emptyCells.push(cell)
+      }
+    }
+  }
+
+  // function that drops candies when the one underneath them is crushed 
+  function drop() {
+    const cells = document.querySelectorAll('.cell')
+    generateCandy()
+    for (let i = 0; i < cells.length; i++) {
+      const cell = cells[i]
+      const b = cells[i + width]
+      if (b && !b.classList[1]) {
+        b.classList.add(`${cell.classList[1]}`)
+        cell.classList.remove(`${cell.classList[1]}`)
+      }
+    }
+    crush()
+  }
 
   // function that allows the swap function to run only if the move is allowed
   function play(cell) {
@@ -99,9 +134,13 @@ function init() {
         proximity = false
         colorCheck = false
         crush()
+        emptyCheck()
+        while (emptyCells.length > 0) {
+          drop()
+          emptyCheck()
+        } 
       }
-      inPlay = []
-      
+      inPlay = []  
     }
   }
 
@@ -113,10 +152,14 @@ function init() {
       cell.classList.add(`${colors[Math.floor(Math.random() * Math.floor(4))]}`)
       cell.setAttribute('id', i)
       grid.appendChild(cell)
-      
       cell.addEventListener('click', () => play(cell))
     }
     crush()
+    emptyCheck()
+    while (emptyCells.length > 0) {
+      drop()
+      emptyCheck()
+    }
   }
 
   createBoard()
