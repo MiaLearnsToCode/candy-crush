@@ -1,6 +1,8 @@
 function init() {
 
   const grid = document.querySelector('#grid')
+  const scoreKeeper = document.querySelector('#score')
+  const movesKeeper = document.querySelector('#moves')
 
   // Grid size
   const width = 9
@@ -13,6 +15,8 @@ function init() {
   let emptyCells = []
   let proximity = false
   let colorCheck = false
+  let score = 0
+  let moves = 10
 
   // function that checks that you are trying to move a candy only by one cell either vertically or horizontally
   function checkProximity() {
@@ -59,6 +63,9 @@ function init() {
     inPlay[0].classList.add(second)
     inPlay[1].classList.remove(second)
     inPlay[1].classList.add(first) 
+
+    moves -= 1
+    movesKeeper.innerHTML = `Moves Left: ${moves}`
   }
 
   // function that loops through the grid and crushes all possible candy
@@ -81,10 +88,13 @@ function init() {
           cell.classList.remove(`${cell.classList[1]}`)
           arrayCheck[i][0].classList.remove(`${arrayCheck[i][0].classList[1]}`)
           arrayCheck[i][1].classList.remove(`${arrayCheck[i][1].classList[1]}`)
+          score += 1
+          scoreKeeper.innerHTML = `Score: ${score}`
         }
       }
     }
   }
+
 
   // function that generates random candies on the first row when candy is crushed
   function generateCandy() {
@@ -126,7 +136,9 @@ function init() {
   // function that allows the swap function to run only if the move is allowed
   function play(cell) {
     inPlay.push(cell)
+    inPlay[0].classList.add('first-pick')
     if (inPlay.length === 2) {
+      inPlay[0].classList.remove('first-pick')
       checkProximity()
       checkColor()
       if (proximity && colorCheck) {
@@ -163,6 +175,7 @@ function init() {
   }
 
   createBoard()
+
 }
 
 window.addEventListener('DOMContentLoaded', init)
