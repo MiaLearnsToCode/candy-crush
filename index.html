@@ -13,12 +13,32 @@
     <main>
       <h1>Candy Crush</h1>
       <div class="game">
+        <!-- LEFT -->
         <div>
-          <h2 id="score"></h2>
-          <h2 id="moves">You have 10 moves to gain 500 points, now crush that candy! </h2>
-          <h2 id="timer">You have 1 minute to gain 1500 points, now crush that candy! </h2>
+          <!-- pre-game -->
+          <div class="instructions">
+            <p>In the game of Candy Crush, your mission is to crush as many candies as possible by moving a candy and aligning it
+              with a row or column of three other candies of the same color.</p>
+          </div>
+          <!-- in-game -->
+          <div class="game-info">
+            <h2 id="score"></h2>
+            <h2 id="moves">You have 10 moves to gain 500 points, now crush that candy! </h2>
+            <h2 id="timer">You have 1 minute to gain 1500 points, now crush that candy! </h2>
+          </div>
         </div>
-        <div id="grid"></div>
+
+        <!-- RIGHT -->
+        <div>
+          <!-- pre-game -->
+          <div class="mode-choice">
+            <h2>Choose a mode to play in:</h2>
+            <button id="pressure">Pressure</button>
+            <button id="strategy">Strategy</button>
+          </div>
+          <!-- in-game -->
+          <div id="grid"></div>
+        </div> 
       </div>
     </main>
   </body>

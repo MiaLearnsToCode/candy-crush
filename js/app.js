@@ -4,6 +4,11 @@ function init() {
   const scoreKeeper = document.querySelector('#score')
   const movesKeeper = document.querySelector('#moves')
   const timeKeeper = document.querySelector('#timer')
+  const instructions = document.querySelector('.instructions')
+  const modeChoice = document.querySelector('.mode-choice')
+  const gameInfo = document.querySelector('.game-info')
+  const pressureButton = document.querySelector('#pressure')
+  const strategyButton = document.querySelector('#strategy')
 
   // Grid size
   const width = 9
@@ -17,9 +22,12 @@ function init() {
   let proximity = false
   let colorCheck = false
   let score = 0
+  let mode = null
+  let firstMove = false
   let moves = 10
   let timer = 60
   let interval = null
+  
 
   // function that checks that you are trying to move a candy only by one cell either vertically or horizontally
   function checkProximity() {
@@ -63,7 +71,12 @@ function init() {
     timeKeeper.innerHTML = `00:${timer}`
     if (timer === 0) {
       clearInterval(interval)
-      timeKeeper.innerHTML = 'Time is up!'
+      grid.style.display = 'none'
+      if (score > 1500) {
+        timeKeeper.innerHTML = 'Congrats, you won! 🎉'
+      } else {
+        timeKeeper.innerHTML = 'You ran out of time 🥵'
+      }
     }
   } 
 
@@ -80,14 +93,26 @@ function init() {
     inPlay[1].classList.remove(second)
     inPlay[1].classList.add(first) 
 
-    moves -= 1
-    movesKeeper.innerHTML = `Moves Left: ${moves}`
-    if (moves === 9) {
+    if (mode === 'pressure' && !firstMove) {
+      firstMove = true 
       countdown()
+    } else if (mode === 'strategy') {
+      moves -= 1
+      movesKeeper.innerHTML = `Moves Left: ${moves}`
+      firstMove = true 
+
+      if (moves === 0) {
+        grid.style.display = 'none'
+        if (score > 500) {
+          movesKeeper.innerHTML = 'Congrats, you won! 🎉'
+        } else {
+          movesKeeper.innerHTML = 'You ran out of moves 🥵'
+        }
+        
+        
+      }
     }
-    if (moves === 0) {
-      movesKeeper.innerHTML = 'You ran out of moves!'
-    }
+    
   }
 
   // function that loops through the grid and crushes all possible candy
@@ -110,8 +135,11 @@ function init() {
           cell.classList.remove(`${cell.classList[1]}`)
           arrayCheck[i][0].classList.remove(`${arrayCheck[i][0].classList[1]}`)
           arrayCheck[i][1].classList.remove(`${arrayCheck[i][1].classList[1]}`)
-          score += 1
-          scoreKeeper.innerHTML = `Score: ${score}`
+          if (firstMove) {
+            score += 1
+            scoreKeeper.innerHTML = `Score: ${score}`
+          }
+          
         }
       }
     }
@@ -186,6 +214,7 @@ function init() {
       cell.classList.add(`${colors[Math.floor(Math.random() * Math.floor(4))]}`)
       cell.setAttribute('id', i)
       grid.appendChild(cell)
+      grid.style.display = 'flex'
       cell.addEventListener('click', () => play(cell))
     }
     crush()
@@ -196,7 +225,25 @@ function init() {
     }
   }
 
-  createBoard()
+  pressureButton.addEventListener('click', () => {
+    mode = 'pressure'
+    instructions.style.display = 'none'
+    modeChoice.style.display = 'none'
+    gameInfo.style.display = 'block'
+    movesKeeper.style.display = 'none'
+    createBoard()
+  })
+
+  strategyButton.addEventListener('click', () => {
+    mode = 'strategy'
+    instructions.style.display = 'none'
+    modeChoice.style.display = 'none'
+    gameInfo.style.display = 'block'
+    timeKeeper.style.display = 'none'
+    createBoard()
+  })
+
+  
 
 }
 

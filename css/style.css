@@ -23,17 +23,39 @@ h1 {
 
 h2 {
   font-family: 'Lobster', cursive;
-  font-size: 30px;
+  font-size: 50px;
   color: #5200b5;
+}
+
+button {
+  background-color: #fb75ff;
+  border-color: #fb75ff;
+  border-radius: 10px;
+  padding: 15px;
+  font-family: 'Lobster', cursive;
+  color: white;
+  font-size: 30px;
+  margin: 10px;
+}
+
+p {
+  font-family: Lato;
+  font-size: 25px;
+  color: #5200b5;
+  line-height: 50px;
+}
+
+.game-info {
+  display: none;
 }
 
 /* grid layout */
 #grid {
-  display: flex;
   flex-wrap: wrap;
   width: 450px;
   height: 350px;
   box-shadow: 5px 5px 20px 5px #c597fc;
+  display: none;
 }
 .cell {
   height: 46px;
