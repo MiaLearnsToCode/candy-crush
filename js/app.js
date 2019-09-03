@@ -3,6 +3,7 @@ function init() {
   const grid = document.querySelector('#grid')
   const scoreKeeper = document.querySelector('#score')
   const movesKeeper = document.querySelector('#moves')
+  const timeKeeper = document.querySelector('#timer')
 
   // Grid size
   const width = 9
@@ -17,6 +18,8 @@ function init() {
   let colorCheck = false
   let score = 0
   let moves = 10
+  let timer = 60
+  let interval = null
 
   // function that checks that you are trying to move a candy only by one cell either vertically or horizontally
   function checkProximity() {
@@ -55,6 +58,19 @@ function init() {
     }
   }
 
+  function decrement() {
+    timer -= 1
+    timeKeeper.innerHTML = `00:${timer}`
+    if (timer === 0) {
+      clearInterval(interval)
+      timeKeeper.innerHTML = 'Time is up!'
+    }
+  } 
+
+  function countdown() {
+    interval = setInterval(decrement, 1000)
+  }
+
   // function that swaps two candies
   function swap() {
     const first = inPlay[0].classList[1]
@@ -66,6 +82,12 @@ function init() {
 
     moves -= 1
     movesKeeper.innerHTML = `Moves Left: ${moves}`
+    if (moves === 9) {
+      countdown()
+    }
+    if (moves === 0) {
+      movesKeeper.innerHTML = 'You ran out of moves!'
+    }
   }
 
   // function that loops through the grid and crushes all possible candy

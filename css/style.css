@@ -1,14 +1,44 @@
+body {
+  background-image: linear-gradient(-90deg, #ede3ff, #fee0ff);
+}
+
+.game {
+  display: flex;
+  align-items: center;
+}
+
+.game > div {
+  padding: 50px;
+  width: 50%;
+}
+
+/* text format */
+h1 {
+  font-family: 'Lobster', cursive;
+  color: white;
+  font-size: 70px;
+  text-shadow: 5px 6px 5px #fb75ff;
+  text-align: center;
+}
+
+h2 {
+  font-family: 'Lobster', cursive;
+  font-size: 30px;
+  color: #5200b5;
+}
+
 /* grid layout */
 #grid {
   display: flex;
   flex-wrap: wrap;
-  width: 360px;
-  height: 280px;
+  width: 450px;
+  height: 350px;
+  box-shadow: 5px 5px 20px 5px #c597fc;
 }
 .cell {
-  height: 38px;
-  width: 38px;
-  border: 1px solid black;
+  height: 46px;
+  width: 46px;
+  border: 2px solid  #5200b5;
 }
 
 /* candies */
@@ -34,6 +64,6 @@
 }
 
 .first-pick {
-  border: 1px solid white;
+  border: 2px solid white;
   filter: brightness(120%)
 }
