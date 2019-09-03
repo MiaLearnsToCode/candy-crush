@@ -1,14 +1,16 @@
 body {
-  background-image: linear-gradient(-90deg, #ede3ff, #fee0ff);
+  /* background-image: linear-gradient(-90deg, #ede3ff, #fee0ff); */
+  background-image: url(https://justcreative.com/wp-content/uploads/2017/03/pink-candy-bg.jpg);
+  background-size: cover;
+  background-position: center; 
 }
 
 .game {
   display: flex;
-  align-items: center;
 }
 
 .game > div {
-  padding: 50px;
+  padding: 0px 50px;
   width: 50%;
 }
 
@@ -16,8 +18,8 @@ body {
 h1 {
   font-family: 'Lobster', cursive;
   color: white;
-  font-size: 70px;
-  text-shadow: 5px 6px 5px #fb75ff;
+  font-size: 85px;
+  text-shadow: 5px 10px 5px #fb75ff;
   text-align: center;
 }
 
@@ -25,6 +27,7 @@ h2 {
   font-family: 'Lobster', cursive;
   font-size: 50px;
   color: #5200b5;
+  text-shadow: 8px 4px 8px white;
 }
 
 button {
@@ -35,31 +38,52 @@ button {
   font-family: 'Lobster', cursive;
   color: white;
   font-size: 30px;
-  margin: 10px;
+  margin-right: 10%;
+}
+
+button:hover {
+  box-shadow: 0px 0px 20px 5px #fb63ff inset;
+  border-color: #fa45ff;
+  cursor: pointer;
 }
 
 p {
-  font-family: Lato;
+  font-family: 'Montserrat', sans-serif;
   font-size: 25px;
   color: #5200b5;
+}
+
+.left {
   line-height: 50px;
+  background-color: #fee0ff;
+  border-radius: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 420px;
+  box-shadow: 0px 0px 40px 10px #fdc2ff inset;
 }
 
 .game-info {
   display: none;
 }
 
+#high-score {
+  font-size: 20px;
+}
+
 /* grid layout */
 #grid {
   flex-wrap: wrap;
-  width: 450px;
-  height: 350px;
+  width: 540px;
+  height: 420px;
   box-shadow: 5px 5px 20px 5px #c597fc;
   display: none;
 }
+
 .cell {
-  height: 46px;
-  width: 46px;
+  height: 56px;
+  width: 56px;
   border: 2px solid  #5200b5;
 }
 

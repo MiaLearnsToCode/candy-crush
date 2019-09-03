@@ -4,7 +4,7 @@
   <head>
   <meta charset="utf-8">
   <title>Game</title>
-  <link href="https://fonts.googleapis.com/css?family=Lato|Lobster&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lobster|Montserrat:600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script type="text/javascript" src="js/app.js"></script>
   </head>
@@ -14,7 +14,7 @@
       <h1>Candy Crush</h1>
       <div class="game">
         <!-- LEFT -->
-        <div>
+        <div class="left">
           <!-- pre-game -->
           <div class="instructions">
             <p>In the game of Candy Crush, your mission is to crush as many candies as possible by moving a candy and aligning it
@@ -22,9 +22,10 @@
           </div>
           <!-- in-game -->
           <div class="game-info">
+            <p id="high-score"></p>
             <h2 id="score"></h2>
-            <h2 id="moves">You have 10 moves to gain 500 points, now crush that candy! </h2>
-            <h2 id="timer">You have 1 minute to gain 1500 points, now crush that candy! </h2>
+            <h2 id="moves"></h2>
+            <h2 id="timer"></h2>
           </div>
         </div>
 
@@ -32,7 +33,8 @@
         <div>
           <!-- pre-game -->
           <div class="mode-choice">
-            <h2>Choose a mode to play in:</h2>
+            <h2>To start a new game,</h2>
+            <h2>choose a mode:</h2>
             <button id="pressure">Pressure</button>
             <button id="strategy">Strategy</button>
           </div>

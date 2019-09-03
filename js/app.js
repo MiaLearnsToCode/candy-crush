@@ -1,6 +1,7 @@
 function init() {
 
   const grid = document.querySelector('#grid')
+  const highScoreKeeper = document.querySelector('#high-score')
   const scoreKeeper = document.querySelector('#score')
   const movesKeeper = document.querySelector('#moves')
   const timeKeeper = document.querySelector('#timer')
@@ -27,8 +28,14 @@ function init() {
   let moves = 10
   let timer = 60
   let interval = null
-  
 
+  // high score
+  localStorage.setItem('highScorePressure', 0)
+  localStorage.setItem('highScoreStrategy', 0)
+  let highScorePressure = localStorage.getItem('highScorePressure')
+  let highScoreStrategy = localStorage.getItem('highScoreStrategy')
+
+  
   // function that checks that you are trying to move a candy only by one cell either vertically or horizontally
   function checkProximity() {
     const firstCell = parseInt(inPlay[0].getAttribute('id'))
@@ -66,6 +73,16 @@ function init() {
     }
   }
 
+  function clearGrid() {
+    score = 0
+    mode = null
+    firstMove = false
+    moves = 10
+    timer = 60
+    interval = null
+    grid.innerHTML = ''
+  }
+
   function decrement() {
     timer -= 1
     timeKeeper.innerHTML = `00:${timer}`
@@ -74,9 +91,14 @@ function init() {
       grid.style.display = 'none'
       if (score > 1500) {
         timeKeeper.innerHTML = 'Congrats, you won! 🎉'
+        if (score > highScorePressure) {
+          localStorage.setItem('highScorePressure', score)
+        }
       } else {
         timeKeeper.innerHTML = 'You ran out of time 🥵'
       }
+      clearGrid()
+      modeChoice.style.display = 'block'
     }
   } 
 
@@ -95,6 +117,7 @@ function init() {
 
     if (mode === 'pressure' && !firstMove) {
       firstMove = true 
+      timeKeeper.innerHTML = `00:${timer}`
       countdown()
     } else if (mode === 'strategy') {
       moves -= 1
@@ -105,11 +128,15 @@ function init() {
         grid.style.display = 'none'
         if (score > 500) {
           movesKeeper.innerHTML = 'Congrats, you won! 🎉'
+          if (score > highScoreStrategy) {
+            localStorage.setItem('highScoreStrategy', score)
+          }
         } else {
           movesKeeper.innerHTML = 'You ran out of moves 🥵'
+          
         }
-        
-        
+        clearGrid()
+        modeChoice.style.display = 'block'
       }
     }
     
@@ -139,7 +166,6 @@ function init() {
             score += 1
             scoreKeeper.innerHTML = `Score: ${score}`
           }
-          
         }
       }
     }
@@ -206,17 +232,32 @@ function init() {
     }
   }
 
-  // Grid generation
-  function createBoard() {
+  function createCells() {
     for (let i = 0; i < cells; i++) {
       const cell = document.createElement('div')
       cell.classList.add('cell')
       cell.classList.add(`${colors[Math.floor(Math.random() * Math.floor(4))]}`)
       cell.setAttribute('id', i)
       grid.appendChild(cell)
-      grid.style.display = 'flex'
       cell.addEventListener('click', () => play(cell))
     }
+  }
+
+  // Grid generation
+  function createBoard() {
+    createCells()
+    grid.style.display = 'flex'
+    scoreKeeper.innerHTML = `Score: ${score}`
+    movesKeeper.innerHTML = 'You have 10 moves to gain 500 points, now crush that candy!'
+    timeKeeper.innerHTML = 'You have 1 minute to gain 1500 points, now crush that candy!'
+    highScorePressure = localStorage.getItem('highScorePressure')
+    highScoreStrategy = localStorage.getItem('highScoreStrategy')
+    if (mode === 'pressure') {
+      highScoreKeeper.innerHTML = `👑 high score: ${highScorePressure}`
+    } else if (mode === 'strategy') {
+      highScoreKeeper.innerHTML = `👑 high score: ${highScoreStrategy}`
+    }
+
     crush()
     emptyCheck()
     while (emptyCells.length > 0) {
@@ -231,6 +272,7 @@ function init() {
     modeChoice.style.display = 'none'
     gameInfo.style.display = 'block'
     movesKeeper.style.display = 'none'
+    timeKeeper.style.display = 'block'
     createBoard()
   })
 
@@ -240,11 +282,9 @@ function init() {
     modeChoice.style.display = 'none'
     gameInfo.style.display = 'block'
     timeKeeper.style.display = 'none'
+    movesKeeper.style.display = 'block'
     createBoard()
   })
-
-  
-
 }
 
 window.addEventListener('DOMContentLoaded', init)
