@@ -73,6 +73,7 @@ function init() {
     }
   }
 
+  // function that clears the grid at the end of the game
   function clearGrid() {
     score = 0
     mode = null
@@ -83,6 +84,9 @@ function init() {
     grid.innerHTML = ''
   }
 
+  
+
+  // function that checks if the player reached the minimum score in the required time
   function decrement() {
     timer -= 1
     timeKeeper.innerHTML = `00:${timer}`
@@ -105,24 +109,18 @@ function init() {
   function countdown() {
     interval = setInterval(decrement, 1000)
   }
-
-  // function that swaps two candies
-  function swap() {
-    const first = inPlay[0].classList[1]
-    const second = inPlay[1].classList[1]
-    inPlay[0].classList.remove(first)
-    inPlay[0].classList.add(second)
-    inPlay[1].classList.remove(second)
-    inPlay[1].classList.add(first) 
-
+  
+  // function that checks how many moves are left
+  function checkMoves() {
     if (mode === 'pressure' && !firstMove) {
-      firstMove = true 
+      firstMove = true
       timeKeeper.innerHTML = `00:${timer}`
+      // at the first move start the time countdown in the pressure mode
       countdown()
     } else if (mode === 'strategy') {
       moves -= 1
       movesKeeper.innerHTML = `Moves Left: ${moves}`
-      firstMove = true 
+      firstMove = true
 
       if (moves === 0) {
         grid.style.display = 'none'
@@ -133,12 +131,24 @@ function init() {
           }
         } else {
           movesKeeper.innerHTML = 'You ran out of moves 🥵'
-          
+
         }
         clearGrid()
         modeChoice.style.display = 'block'
       }
     }
+  }
+
+  // function that swaps two candies
+  function swap() {
+    const first = inPlay[0].classList[1]
+    const second = inPlay[1].classList[1]
+    inPlay[0].classList.remove(first)
+    inPlay[0].classList.add(second)
+    inPlay[1].classList.remove(second)
+    inPlay[1].classList.add(first) 
+
+    checkMoves()
     
   }
 
@@ -232,6 +242,7 @@ function init() {
     }
   }
 
+  // function that creates the grid HTML elements
   function createCells() {
     for (let i = 0; i < cells; i++) {
       const cell = document.createElement('div')
@@ -257,7 +268,8 @@ function init() {
     } else if (mode === 'strategy') {
       highScoreKeeper.innerHTML = `👑 high score: ${highScoreStrategy}`
     }
-
+    
+    // check for any generated candy isn't 3 in a row/column with the same color
     crush()
     emptyCheck()
     while (emptyCells.length > 0) {

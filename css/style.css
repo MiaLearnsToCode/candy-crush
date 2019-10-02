@@ -6,6 +6,7 @@ body {
 
 .game {
   display: flex;
+  margin: 100px 0px;
 }
 
 .game > div {
@@ -24,7 +25,7 @@ h1 {
 
 h2 {
   font-family: 'Lobster', cursive;
-  font-size: 50px;
+  font-size: 40px;
   color: #5200b5;
   text-shadow: 8px 4px 8px white;
 }
@@ -111,42 +112,4 @@ p {
 .first-pick {
   border: 2px solid white;
   filter: brightness(120%)
-}
-
-@media only screen and (max-width: 700px) {
-  .game {
-    flex-direction: column;
-    padding: 30px;
-  }
-
-  h2 {
-    font-size: 30px;
-  }
-
-  p {
-    font-size: 20px;
-  }
-
-  .game > div {
-    height: 100%;
-    width: 80%;
-    padding: 30px;
-  }
-
-  #pressure, #strategy {
-    margin: 20px auto;
-  }
-
-  #grid {
-    margin: 50px 0px;
-    width: 360px;
-    height: 280px;
-  }
-
-  .cell {
-    height: 36px !important;
-    width: 36px !important;
-    border: 2px solid  #5200b5;
-  }
-  
 }
